@@ -38,6 +38,12 @@ class AdminController extends Controller
         ]);
     }
 
+    public function doctorsDelete(Doctor $id)
+    {
+        $id->user->delete();
+        return redirect('/doctors/all')->with('succss' , 'Doctor Deleted !');
+    }
+
     public function doctorsPatch(Doctor $id)
     {
         $attrips = request()->validate([
@@ -63,5 +69,40 @@ class AdminController extends Controller
         ]);
 
         return back()->with('succss' , 'Doctor Info Updated !');
+    }
+
+    public function doctorsCreate()
+    {
+        return view('admin.doctors.create' ,[
+            'specs' => Specialize::all()
+        ]);
+    }
+
+    public function doctorsMake()
+    {
+        $attrips = request()->validate([
+            'name' => ['required', 'min:3'],
+            'password' => ['required', 'min:8'],
+            'email' => ['required', 'email' , Rule::unique('users' , 'email')],
+            'age' => ['required', 'numeric'],
+            'spec' => ['required', Rule::exists('specializes' , 'id')],
+            'admin' => ['required' , 'boolean']
+        ]);
+
+        $user = User::create([
+            'name' => $attrips['name'],
+            'password' => $attrips['password'],
+            'email' => $attrips['email'],
+            'age' => $attrips['age'],
+            'admin' => $attrips['admin'],
+        ]);
+
+        Doctor::create([
+            'user_id' => $user->id,
+            'specialize' => $attrips['spec']
+        ]);
+
+        return back()->with('succss' , 'Doctor Created !');
+
     }
 }

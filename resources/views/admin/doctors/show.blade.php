@@ -32,8 +32,15 @@
 
     </main>
 
-    <a href="/doctors/{{ $doctor->id }}/edit" class="block w-fit mx-auto py-2 px-4 bg-blue-500 text-white rounded-md">
-        Edit?
-    </a>
+    <section class="sm:w-3/5 m-auto p-1 flex justify-between">
+        <a href="/doctors/{{ $doctor->id }}/edit" class="block w-fit mx-auto py-2 px-4 bg-blue-500 text-white rounded-md">
+            Edit?
+        </a>
+        <form action="/doctors/{{ $doctor->id }}/delete" method="post" class="block w-fit mx-auto bg-red-500 text-white rounded-md">
+            @csrf
+            @method('delete')
+            <button type="submit" class="py-2 px-4">Delete?</button>
+        </form>
+    </section>
     
 </x-layout>

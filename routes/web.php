@@ -100,7 +100,7 @@ Route::middleware(['auth_', 'admin'])->name('admin.')->group(function () {
 
     Route::get('/admin', [AdminController::class, 'home'])
         ->name('home');
-
+        
     Route::get('/doctors/all',  [AdminController::class, 'doctorsIndex'])
         ->name('doctors.all');
 
@@ -114,5 +114,17 @@ Route::middleware(['auth_', 'admin'])->name('admin.')->group(function () {
 
     Route::patch('/doctors/{id}/edit',  [AdminController::class, 'doctorsPatch'])
         ->name('doctors.edit')
+        ->where('id', '[0-9]+');
+
+    Route::delete('/doctors/{id}/delete',  [AdminController::class, 'doctorsDelete'])
+        ->name('doctors.delete')
+        ->where('id', '[0-9]+');
+
+    Route::get('/doctors/create',  [AdminController::class, 'doctorsCreate'])
+        ->name('doctors.create')
+        ->where('id', '[0-9]+');
+
+    Route::post('/doctors/create',  [AdminController::class, 'doctorsMake'])
+        ->name('doctors.create')
         ->where('id', '[0-9]+');
 });

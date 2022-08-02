@@ -62,11 +62,12 @@
             @foreach ($doctors as $doctor)
                 @php
                     $spec = $doctor->user->admin ? 'True' : 'False';
-                    $bg = $loop->odd ? 'bg-[#586474] ' : '';
+                    // $bg = $loop->odd ? 'bg-[#586474] ' : '';
                 @endphp
                 <section
-                    class="grid grid-cols-4 p-2 border-white border-opacity-50 {{ $loop->last ? '' : 'border-b-2' }} {{ $bg }}">
-                    <h1 class="hover:text-blue-500 transition-all">
+                    class="grid grid-cols-4 p-2 border-white border-opacity-50 {{ $loop->last ? '' : 'border-b-2' }}
+                    hover:bg-[#586474] transition-all">
+                    <h1 class="hover:text-blue-400 transition-all">
                         <a href="/doctors/{{ $doctor->id }}">
                             {{ $doctor->user->name }}
                         </a>
